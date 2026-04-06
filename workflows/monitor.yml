@@ -1,0 +1,24 @@
+name: Noon Slot Monitor
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # Every 10 minutes
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  check-slots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run check
+        env:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          NOON_COOKIE: ${{ secrets.NOON_COOKIE }}
+        run: python check_slots.py
