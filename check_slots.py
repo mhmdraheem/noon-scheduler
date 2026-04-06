@@ -45,7 +45,7 @@ def check_noon():
                 print("No slots available currently.")
         else:
             print(f"Failed to check: {response.status_code}")
-            notify("Not Successfull: " {response.status_code})
+            notify(f"⚠️ Noon Check Failed\nStatus: {response.status_code}\nResponse: {response.text[:100]}")
             if response.status_code == 401:
                 notify("⚠️ Noon Cookie Expired! Please update your GitHub Secret.")
     except Exception as e:
