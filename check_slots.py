@@ -37,12 +37,12 @@ def check_noon():
         response = requests.post(url, headers=headers, json=data)
         if response.status_code == 200:
             result = response.json()
-            # Logic: If the 'days' array has any items, a slot exists
-            # Adjust the key 'days' based on the actual response structure
-            if result.get('days') and len(result['days']) > 0:
+            notify(f"Response Received {result}")
+            if isinstance(result, list) and len(result) > 0:
                 notify("🚀 NOON SLOT FOUND! Go schedule now: https://fbn.noon.partners/")
+                notify(f"{result}")
             else:
-                print("No slots available currently.")
+                print("No slots available currently (List is empty).")
         else:
             print(f"Failed to check: {response.status_code}")
             notify(f"⚠️ Noon Check Failed\nStatus: {response.status_code}\nResponse: {response.text[:100]}")
